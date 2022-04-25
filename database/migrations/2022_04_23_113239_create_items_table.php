@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('image');
             $table->foreignId('categorie_id')->nullable()->constrained('categories');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
     

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('message');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('admin_id')->nullable()->constrained('admins');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

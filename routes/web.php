@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Categorie;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/getcategories', function(){
+    $users = Categorie::all();
+ echo $users;
+// foreach ($users as $user) {
+//     echo $user->name;
+// }
 });

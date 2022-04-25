@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->foreignId('gender_id')->nullable()->constrained('genders');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

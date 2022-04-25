@@ -9,7 +9,23 @@
 
 ## Mysql database schema 
 
-![database schema](./images/drawSQL-export-2022-04-23_20_32.png)
+![database schema](./images/drawSQL-export-2022-04-25_00_23.png)
+
+## Notes
+
+- use php artisan make:model ' Name ' -mcr , to create model with
+migration controller and resource 'model name singular and it will be surfixed as plural in the migration' . 
+
+- migration tables should be created in order .
+
+- you can use protected $table="Name of the table" to specify for which table the model is related 'laravel does it automaticaly' .
+
+- use protected method $fillable='array of columns that can be filled in the table', required .
+
+- in the model Laravel will surfix your public function name with '_id'
+to match the column you are refering to if your function name doesnt match your column name surfixed the return statement takes a second parameter wich accepts your actual column name .
+
+- files like images are note sotred directly in the DB they are stored on a hard drive and the link will be stored in the DB .
 
 ## About Laravel
 

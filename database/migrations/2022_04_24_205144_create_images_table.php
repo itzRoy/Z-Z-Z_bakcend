@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->float('amount', 8,2);
-            $table->bigInteger('phone');
-            $table->string('address');
-            $table->string('note');
-            $table->foreignId('user_id')->nullable()->constrained('users');
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('image_url');
+            $table->foreignId('item_id')->nullable()->constrained('items');
             $table->timestamps()->useCurrent();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('images');
     }
 };
