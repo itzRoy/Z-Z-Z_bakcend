@@ -19,8 +19,8 @@ return new class extends Migration
             $table->bigInteger('phone');
             $table->string('address');
             $table->string('note');
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->timestamps()->useCurrent();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

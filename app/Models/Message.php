@@ -9,7 +9,7 @@ class Message extends Model
 {
 
     protected $table = 'messages';
-    protected $fillable = ['message'];
+    protected $fillable = ['message', 'user_id', 'admin_id'];
 
     public function user(){
         return $this->belongsTo('App\Models\User');

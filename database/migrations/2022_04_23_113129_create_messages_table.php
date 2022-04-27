@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('message');
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->foreignId('admin_id')->nullable()->constrained('admins');
-            $table->timestamps()->useCurrent();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('admin_id')->nullable()->constrained('admins')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

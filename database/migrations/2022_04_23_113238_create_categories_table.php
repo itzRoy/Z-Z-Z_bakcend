@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->foreignId('gender_id')->nullable()->constrained('genders');
-            $table->timestamps()->useCurrent();
+            $table->string('name')->unique();
+            $table->foreignId('gender_id')->nullable()->constrained('genders')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

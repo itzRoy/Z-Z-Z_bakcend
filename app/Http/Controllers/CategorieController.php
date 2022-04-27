@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class CategorieController extends Controller
 {
@@ -14,19 +17,19 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categorie::all();
+
+        foreach ($categories as $categorie) $categorie->item;
+        return response()->json([
+            'status' => 200,
+            'error' => false,
+            'message' => 'got all categories successfully!',
+            'Data' => $categories
+        ]);
+    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+   
     /**
      * Store a newly created resource in storage.
      *
@@ -35,30 +38,59 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //rules for validator
+        $rules = array(
+            'name' => 'bail | required | max: 255',
+            'gender_id' => 'bail | required | numeric'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        $errorMessage = $validator->errors();
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'error' => true,
+                'message' => 'bad request error',
+                'errors' => $errorMessage
+
+            ]);
+        }
+
+        $categorie = Categorie::create($request->input());
+        return response()->json([
+            'status' => 200,
+            'error' => false,
+            'message' => 'New categorie added',
+            'sub-gategory' => $categorie
+        ]);
     }
 
+
     /**
-     * Display the specified resource.
+     * Display a categorie with their items.
      *
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function show(Categorie $categorie)
+    public function show($id)
     {
-        //
+    
+        $categorie = Categorie::find($id);
+        $categorie_item = $categorie->items;
+        foreach($categorie_item as $item) $item;
+
+        return response()->json([
+            'status' => 200,
+            'error' => false,
+            'sub-categorie' => $categorie,
+        ]);
+
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categorie $categorie)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +99,30 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, $id)
     {
-        //
+        $categorie = Categorie::find($id);
+
+        if (!$categorie) {
+            return response()->json([
+                'Status' => 404,
+                'error' => true,
+                'message' => "sub-categorie with id:'$id' was not found!"
+
+            ]);
+        }
+
+        if ($request->name) $categorie->name = $request->name;
+        if ($request->gender_id) $categorie->gender_id = $request->gender_id;
+        $categorie->save();
+
+        return response()->json([
+            'Status' => 200,
+            'error' => false,
+            'message' => "sub-categire with id:'$id' was successfully updated!"
+        ]);
+
+
     }
 
     /**
@@ -78,8 +131,24 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categorie $categorie)
+    public function destroy($id)
     {
-        //
+        $categorie = Categorie::find($id);
+        if (!$categorie) {
+            return response()->json([
+                'Status' => 404,
+                'error' => true,
+                'message' => "Could not find categorie with id: '$id'!"
+            ]);
+        }
+        $categorie->delete();
+
+        return response()->json([
+            'Status' => 200,
+            'error' => false,
+            'message' => "categorie: '$categorie->name' was successfully deleted!"
+        ]);
     }
+
+    
 }

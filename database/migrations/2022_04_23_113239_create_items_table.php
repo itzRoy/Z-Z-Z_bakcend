@@ -19,9 +19,8 @@ return new class extends Migration
             $table->bigInteger('quantity');
             $table->float('price', 8,2);
             $table->string('description');
-            $table->string('image');
-            $table->foreignId('categorie_id')->nullable()->constrained('categories');
-            $table->timestamps()->useCurrent();
+            $table->foreignId('categorie_id')->nullable()->constrained('categories')->onDelete('cascade');
+            $table->timestamps();
         });
     }
     

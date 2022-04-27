@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('genders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type')->unique();
+            $table->timestamps();
         });
     }
 

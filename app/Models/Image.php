@@ -9,7 +9,7 @@ class Image extends Model
 {
 
     protected $table = 'images';
-    protected $fillable = ['image_url'];
+    protected $fillable = ['image_url', 'item_id'];
 
     public function item(){
         return $this->belongsTo('App\Models\Item');

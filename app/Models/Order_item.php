@@ -9,6 +9,7 @@ class Order_item extends Model
 {
 
     protected $table = 'order_items';
+    protected $fillable = ['item_id', 'order_id'];
 
     public function item(){
         return $this->belongsTo('App\Models\Item');

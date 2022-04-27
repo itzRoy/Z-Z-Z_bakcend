@@ -10,7 +10,7 @@ class Gender extends Model
     protected $table = 'genders';
     protected $fillable = ['type'];
 
-    public function categorie(){
+    public function categories(){
         return $this->hasMany('App\Models\Categorie');
     }
 

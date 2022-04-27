@@ -9,7 +9,7 @@ class Item extends Model
 {
 
     protected $table = 'items';
-    protected $fillable = ['name', 'quantity', 'price', 'description'];
+    protected $fillable = ['name', 'quantity', 'price', 'description', 'categorie_id'];
 
     public function categorie(){
         return $this->belongsTo('App\Models\Categorie');

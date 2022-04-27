@@ -2,6 +2,17 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\GenderController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ImageController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +25,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// admin
+Route::resource('admin', AdminController::class);
+
+
+// users
+Route::resource('users', AdminController::class);
+
+// messages
+Route::resource('messages', MessageController::class);
+
+// orders
+Route::resource('orders', OrderController::class);
+
+// order-item
+Route::resource('orderitems', OrderItemController::class);
+
+// gender
+Route::resource('genders', GenderController::class);
+
+// categories
+Route::resource('categories', CategorieController::class);
+
+// items
+Route::resource('items', ItemController::class);
+
+// images
+Route::resource('images', ImageController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/hello', function(){
-    $result = DB::table('items')->pluck('name');
-    return $result;
- });    
- 

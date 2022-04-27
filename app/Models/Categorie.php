@@ -9,13 +9,13 @@ class Categorie extends Model
 {
 
     protected $table = 'categories';
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'gender_id'];
 
     public function gender(){
         return $this->belongsTo('App\Models\Gender');
     }
 
-    public function item(){
+    public function items(){
         return $this->hasMany('App\Models\Item');
     }
     use HasFactory;
