@@ -13,6 +13,7 @@ class Gender extends Model
     public function categories(){
         return $this->hasMany('App\Models\Categorie');
     }
+    public $timestamps = false;
 
     use HasFactory;
 }

@@ -18,5 +18,7 @@ class Categorie extends Model
     public function items(){
         return $this->hasMany('App\Models\Item');
     }
+
+    
     use HasFactory;
 }

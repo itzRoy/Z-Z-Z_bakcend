@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gender;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -75,8 +76,9 @@ class GenderController extends Controller
     public function show($id)
     {
         $genders = Gender::find($id);
+        $genders->categories;
 
-        $categories = $genders->categories;
+        
         return response()->json([
             'status' => 200,
             'error' => false,
@@ -144,6 +146,23 @@ class GenderController extends Controller
             'Status' => 200,
             'error' => false,
             'message' => "gender: '$gender->name' was successfully deleted!"
+        ]);
+    }
+
+    public function gender_categorie_item($id)
+    {
+        $genders = Gender::find($id);
+        $categories = $genders->categories;
+
+        foreach($categories as $id){
+            $categorie = Categorie::find($id->id);
+            $id->items = $categorie->items;
+        }
+        return response()->json([
+            'status' => 200,
+            'error' => false,
+            'message' => 'got all genders!',
+            'gender' => $genders
         ]);
     }
 }

@@ -14,7 +14,14 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+        foreach($items as $item) $item->image;
+    
+        return response()->json([
+            'status'=> 200,
+            'error' => false,
+            'data'=> $items
+        ]);
     }
 
     /**
@@ -44,9 +51,15 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show($id)
     {
-        //
+        $item = Item::findorfail($id);
+        $item->image;
+        return response()->json([
+            'status'=> 200,
+            'error'=> false,
+            'data'=> $item
+        ]);
     }
 
     /**
