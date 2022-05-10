@@ -10,9 +10,21 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.16.7",
         "axios": "^0.25",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
+    },
+    "dependencies": {
+        "@babel/plugin-syntax-jsx": "7.16.7",
+        "@babel/preset-env": "^7.17.10",
+        "@babel/preset-react": "7.16.7",
+        "@inertiajs/inertia": "^0.11.0",
+        "@inertiajs/inertia-react": "^0.8.0",
+        "@inertiajs/progress": "^0.2.7",
+        "create-react-app": "^5.0.1",
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0"
     }
 }

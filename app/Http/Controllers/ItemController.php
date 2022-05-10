@@ -54,6 +54,7 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::findorfail($id);
+        if(!$item)  echo 'item not found';
         $item->image;
         return response()->json([
             'status'=> 200,

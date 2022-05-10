@@ -43,9 +43,13 @@ Route::resource('orderitems', OrderItemController::class);
 
 // gender
 Route::resource('genders', GenderController::class);
+Route::get('gender_categorie/{id}', [GenderController::class, 'gender_categorie']);
+Route::get('gender_categorie_item/{id}', [GenderController::class, 'gender_categorie_item']);
 
 // categories
 Route::resource('categories', CategorieController::class);
+Route::get('categorie_items/{id}', [CategorieController::class, 'categorie_items']);
+
 
 // items
 Route::resource('items', ItemController::class);

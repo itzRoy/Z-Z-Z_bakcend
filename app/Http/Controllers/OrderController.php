@@ -14,7 +14,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $order= Order::find(1);
+        $order->items()->get();
+
+
+
+foreach ($order->items as $item) $item;
+
+        return response()->json([
+            'status'=> 200,
+            'error' => false,
+            'data'=> $order
+        ]);
     }
 
     /**
@@ -44,9 +55,21 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Order $id)
     {
-        //
+        $order= Order::find($id);
+        $order->items()->get();
+
+
+
+foreach ($order->roles as $role) $role;
+
+        return response()->json([
+            'status'=> 200,
+            'error' => false,
+            'data'=> $order
+        ]);
+
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gender;
 use App\Models\Categorie;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,7 +24,7 @@ class GenderController extends Controller
             'status' => 200,
             'error' => false,
             'message' => 'got all genders!',
-            'gender' => $genders
+            'genders' => $genders
         ]);
     
     }
@@ -76,7 +77,6 @@ class GenderController extends Controller
     public function show($id)
     {
         $genders = Gender::find($id);
-        $genders->categories;
 
         
         return response()->json([
@@ -108,18 +108,16 @@ class GenderController extends Controller
             ]);
         }
 
-        if ($request->type) {
-
-        
-        $gender->type = $request->type;
+        if ($request->type) $gender->type = $request->type;
         $gender->save();
 
         return response()->json([
             'Status' => 200,
             'error' => false,
-            'message' => "gender with id:'$id' was successfully updated!"
+            'message' => "gender with id:'$id' was successfully updated!",
+            'updated_gender' => Gender::find($id)
         ]);
-    }
+    
      
 
     }
@@ -137,7 +135,7 @@ class GenderController extends Controller
             return response()->json([
                 'Status' => 404,
                 'error' => true,
-                'message' => "Could not find gender with id: '$id'!"
+                'message' => "Could not find gender with id: $id!"
             ]);
         }
         $gender->delete();
@@ -145,10 +143,11 @@ class GenderController extends Controller
         return response()->json([
             'Status' => 200,
             'error' => false,
-            'message' => "gender: '$gender->name' was successfully deleted!"
+            'message' => "gender: '$gender->type' was successfully deleted!"
         ]);
     }
 
+    //get one gender with its categories and its items
     public function gender_categorie_item($id)
     {
         $genders = Gender::find($id);
@@ -158,6 +157,27 @@ class GenderController extends Controller
             $categorie = Categorie::find($id->id);
             $id->items = $categorie->items;
         }
+foreach($genders->categories as $categorie) {
+    foreach($categorie->items as $item_image){
+        $item = Item::find($item_image->id);
+        $item_image->image_url = $item->image;
+    }
+    }
+
+        return response()->json([
+            'status' => 200,
+            'error' => false,
+            'message' => 'got all genders!',
+            'gender' => $genders
+        ]);
+    }
+
+    public function gender_categorie($id)
+    {
+        $genders = Gender::find($id);
+        $genders->categories;
+
+        
         return response()->json([
             'status' => 200,
             'error' => false,

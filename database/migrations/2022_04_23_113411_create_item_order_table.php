@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('item_id')->constrained('items');
+        Schema::create('item_order', function (Blueprint $table) {
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
         });
     }
 

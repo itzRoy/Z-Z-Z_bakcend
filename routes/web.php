@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/hello', function(){
+    return inertia('Hello');
+});
 
 Route::get('/getcategories', function(){
     $users = Categorie::all();

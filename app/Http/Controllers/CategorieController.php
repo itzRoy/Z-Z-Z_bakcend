@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
-
 
 class CategorieController extends Controller
 {
@@ -19,17 +18,19 @@ class CategorieController extends Controller
     {
         $categories = Categorie::all();
 
-        foreach ($categories as $categorie) $categorie->item;
+        foreach ($categories as $categorie) {
+            $categorie->item;
+        }
+
         return response()->json([
             'status' => 200,
             'error' => false,
             'message' => 'got all categories successfully!',
-            'Data' => $categories
+            'Data' => $categories,
         ]);
-    
+
     }
 
-   
     /**
      * Store a newly created resource in storage.
      *
@@ -41,7 +42,7 @@ class CategorieController extends Controller
         //rules for validator
         $rules = array(
             'name' => 'bail | required | max: 255',
-            'gender_id' => 'bail | required | numeric'
+            'gender_id' => 'bail | required | numeric',
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -53,7 +54,7 @@ class CategorieController extends Controller
                 'status' => 400,
                 'error' => true,
                 'message' => 'bad request error',
-                'errors' => $errorMessage
+                'errors' => $errorMessage,
 
             ]);
         }
@@ -63,10 +64,9 @@ class CategorieController extends Controller
             'status' => 200,
             'error' => false,
             'message' => 'New categorie added',
-            'sub-gategory' => $categorie
+            'sub-gategory' => $categorie,
         ]);
     }
-
 
     /**
      * Display a categorie with their items.
@@ -76,10 +76,8 @@ class CategorieController extends Controller
      */
     public function show($id)
     {
-    
+
         $categorie = Categorie::find($id);
-        $categorie_item = $categorie->items;
-        foreach($categorie_item as $item) $item;
 
         return response()->json([
             'status' => 200,
@@ -87,10 +85,7 @@ class CategorieController extends Controller
             'sub-categorie' => $categorie,
         ]);
 
-
     }
-
-   
 
     /**
      * Update the specified resource in storage.
@@ -107,21 +102,26 @@ class CategorieController extends Controller
             return response()->json([
                 'Status' => 404,
                 'error' => true,
-                'message' => "sub-categorie with id:'$id' was not found!"
+                'message' => "sub-categorie with id:'$id' was not found!",
 
             ]);
         }
 
-        if ($request->name) $categorie->name = $request->name;
-        if ($request->gender_id) $categorie->gender_id = $request->gender_id;
+        if ($request->name) {
+            $categorie->name = $request->name;
+        }
+
+        if ($request->gender_id) {
+            $categorie->gender_id = $request->gender_id;
+        }
+
         $categorie->save();
 
         return response()->json([
             'Status' => 200,
             'error' => false,
-            'message' => "sub-categire with id:'$id' was successfully updated!"
+            'message' => "sub-categire with id:'$id' was successfully updated!",
         ]);
-
 
     }
 
@@ -138,7 +138,7 @@ class CategorieController extends Controller
             return response()->json([
                 'Status' => 404,
                 'error' => true,
-                'message' => "Could not find categorie with id: '$id'!"
+                'message' => "Could not find categorie with id: '$id'!",
             ]);
         }
         $categorie->delete();
@@ -146,9 +146,25 @@ class CategorieController extends Controller
         return response()->json([
             'Status' => 200,
             'error' => false,
-            'message' => "categorie: '$categorie->name' was successfully deleted!"
+            'message' => "categorie: '$categorie->name' was successfully deleted!",
         ]);
     }
 
-    
+    public function categorie_items($id)
+    {
+
+        $categorie = Categorie::find($id);
+        $categorie->items;
+        foreach($categorie->items as $item_image){
+            $item = Item::find($item_image->id);
+            $item_image->image_url = $item->image;
+        }
+        return response()->json([
+            'status' => 200,
+            'error' => false,
+            'sub-categorie' => $categorie,
+        ]);
+
+    }
+
 }

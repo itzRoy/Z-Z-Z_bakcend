@@ -15,8 +15,8 @@ class Item extends Model
         return $this->belongsTo('App\Models\Categorie');
     }
 
-    public function orderItem(){
-        return $this->belongsToMany('App\Models\Order_item');
+    public function order(){
+        return $this->belongsToMany('App\Models\Order');
     }
 
     public function image(){
